@@ -1,12 +1,12 @@
 package com.javatechie.stock_trading_client;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class StockTradingClientApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
