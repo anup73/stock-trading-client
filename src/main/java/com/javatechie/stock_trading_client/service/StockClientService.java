@@ -1,9 +1,6 @@
 package com.javatechie.stock_trading_client.service;
 
-import com.javatechie.grpc.OrderSummary;
-import com.javatechie.grpc.StockRequest;
-import com.javatechie.grpc.StockResponse;
-import com.javatechie.grpc.StockTradingServiceGrpc;
+import com.javatechie.grpc.*;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -45,15 +42,42 @@ public class StockClientService {
 
             @Override
             public void onError(Throwable throwable) {
-                System.out.println("Order Summary Receivedn error from Server:" + throwable);
+                System.out.println("Order Summary Received error from Server:" + throwable);
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("Stream completed , server is done se
+                System.out.println("Stream completed , server is done se");
             }
         };
-        StreamObserver<StockOrder> requestObserver = new StreamObserver<StockOrder>();
+        StreamObserver<StockOrder> requestObserver = stockTradingServiceStub.bulkStockOrder(responseObserver);
+
+        try {
+            requestObserver.onNext(StockOrder.newBuilder()
+                    .setOrderId(1)
+                    .setStockSymbol("AAPL")
+                    .setOrderType("BUY")
+                    .setPrice(150.5)
+                    .setQuantity(10)
+                    .build());
+            requestObserver.onNext(StockOrder.newBuilder()
+                    .setOrderId(2)
+                    .setStockSymbol("AAPL")
+                    .setOrderType("BUY")
+                    .setPrice(150.5)
+                    .setQuantity(10)
+                    .build());
+            requestObserver.onNext(StockOrder.newBuilder()
+                    .setOrderId(3)
+                    .setStockSymbol("AAPL")
+                    .setOrderType("BUY")
+                    .setPrice(150.5)
+                    .setQuantity(10)
+                    .build());
+            requestObserver.onCompleted();
+        }catch(Exception e) {
+            requestObserver.onError(e);
+        }
 
     }
 }
